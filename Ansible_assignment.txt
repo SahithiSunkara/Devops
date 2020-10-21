@@ -1,0 +1,57 @@
+Ansible Commands:
+
+Ansible version:
+
+ansible --version
+
+ansible.cfg:
+
+cat ~/.ansible.cfg
+
+Inventory file:
+
+cat ~/inventory
+
+There are some related commands.
+
+ansible-lint --version
+
+yamllint --version
+
+git --version
+
+Sample commands:
+
+ansible all --list-hosts
+
+ansible web -m ping
+
+ansible node-1 -m shell -a 'hostname'
+
+Creating user on hosts:
+
+ansible --list-host -all
+
+ansible --list-host node-1
+
+ansible all -m ping
+
+sudo nano git-setup.yml
+
+node-1 ansible_host=172.20.0.2
+
+---
+ - hosts : node-1
+   become: true
+   tasks : 
+    - name : install git
+      package : pkg=git state=installed
+      
+      notify:
+       - start git
+  
+   handlers :
+    - name : start git
+      service : name=git state=started
+
+ansible-playbook git-setup.yml
