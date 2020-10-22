@@ -36,6 +36,9 @@ ansible --list-host node-1
 
 ansible all -m ping
 
+assignment-1
+--------------------------------------
+
 sudo nano git-setup.yml
 
 node-1 ansible_host=172.20.0.2
@@ -55,3 +58,79 @@ node-1 ansible_host=172.20.0.2
       service : name=git state=started
 
 ansible-playbook git-setup.yml
+
+
+2nd Assignment
+--------------------------------------
+
+cd /home
+
+mkdir ansible
+
+cd ansible
+
+cat output
+
+ansible "node name" -m ping > /home/ansible/output
+
+4th Assignment
+---------------------------------------
+
+vi /etc/ansible/hosts - Inventory file path created during installation.
+
+[web]
+node-1 ansible_host=172.20.0.2
+node-2 ansible_host=172.20.0.3
+
+[all:vars]
+ansible_user=centos
+ansible_ssh_private_key_file=/root/automation-keypair.pem
+
+ansible web -m ping
+
+cd /home/ansible
+
+sudo nano web.yml
+
+---
+- hosts: web
+  become: true
+  vars:
+    project_root: /var/www/html
+  tasks:  
+  - name: Install Apache Webserver
+    yum: pkg=httpd state=latest
+  - name: Place the index file at project root
+    copy: src=index.html dest={{ project_root }}/index.html owner=apache group=apache mode=0644
+  - name: Enable Apache on system reboot
+    service: name=httpd enabled=yes
+    notify: restart apache
+  handlers:
+  - name: restart apache
+    service: name=httpd state=restarted
+
+ansible-playbook web.yml
+
+5th assignment
+------------------------------------------
+
+sudo nano report.yml
+
+---
+- hosts: localhost
+  tasks:
+    - name: download transactions_list
+      block:
+        - get_url:
+            url: http://apps.l33t.com/transaction_list
+            dest: /home/ansible/transaction_list
+        - replace: 
+            path: /home/ansible/transaction_list 
+            regexp: "#BLANKLINE"
+            replace: '\n'
+        - debug: msg="File successfully downloaded"
+      rescue:
+        - debug: msg="l33t.com appears to be down. Please Try again later."
+      always:
+        - debug: msg="Attempt got completed."
+
