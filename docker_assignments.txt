@@ -1,0 +1,4 @@
+2. docker pull nginx:latest
+3. docker images
+5. docker run -it imageid
+6. 
