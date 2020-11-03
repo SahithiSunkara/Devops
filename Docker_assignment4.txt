@@ -1,0 +1,15 @@
+Create a Dockerfile: 
+FROM nginx:1.15.8
+
+# copy the packaged jar file into our docker image
+COPY /project/static/fruits.json /usr/share/nginx/html/fruit.json
+ADD /project/nginx.con /etc/nginx/nginx.conf
+EXPOSE 80
+ 
+# set the startup
+ command to execute the jar
+CMD["nginx" "-g" "daemon" "off"]
+
+docker build -t Dockerfile:fruit-list:1.0.0
+
+docker run --name fruit-list -d -p 8080:80 fruit-list:1.0.0

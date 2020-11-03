@@ -1,0 +1,45 @@
+2. docker pull nginx:latest
+3. docker images
+5. docker run -it imageid
+6. docker ps
+7. docker ps -a
+8. docker ps -qf "name=IMAGE_NAME" 
+9. docker history myimage
+10. docker pull tomcat
+11. docker run -itd -p 80:80 --name tomcat <imageID>
+12. docker inspect container_ID
+13. exposed on 11th command
+14. curl http://docker_host_IP:80
+15. docker images | grep tomcat
+16. docker exec -itd container_ID /bin/bash
+     JAVA_HOME
+    CATALINA_HOME
+17. docker ps
+18. docker run -itd -p 80:80 --name tomcat <imageID>
+    docker run -itd -p 8085:8085 --name tomcat2 <imageID>
+     go to browser and use http://Ip_address:80 and http://Ip_address:8085
+19. docker pull ubuntu:ubuntu/18.04
+    docker pull ubuntu:ubuntu/20.04
+20. docker run -it --name ubuntu Image_ID
+21. docker run -itd --name ubuntu_detached Image_ID
+22. docker ps -a | grep ubuntu
+23. docker ps | grep tomcat
+    docker start container_Id
+24. docker logs container_Id -f
+25. docker ps | grep ubuntu
+	docker run -it container_ID --name ubuntu <imageID>
+26. docker exec -itd -u root container_ID /bin/bash
+27. touch fileName
+28. apt-get install vi
+29. exit
+30. docker ps | grep ubuntu
+31. docker run -it --name ubuntu image_ID
+32. docker exec -itd -u root container_ID /bin/bash
+33. docker stop containerID
+    docker rm containerID
+35. docker commmit container_name
+	docker tag container_ID image2
+36. docker run -itd -p 8090:8090 --name container_name <imageID>
+37. docker ps | grep  tomcat 
+     docker stop containerID
+    docker rm containerID

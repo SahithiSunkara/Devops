@@ -1,4 +1,9 @@
 2. docker pull nginx:latest
 3. docker images
 5. docker run -it imageid
-6. 
+6. docker ps
+7. docker ps -a
+8. docker ps -qf "name=IMAGE_NAME" 
+9. docker history myimage
+10. docker pull tomcat
+11.

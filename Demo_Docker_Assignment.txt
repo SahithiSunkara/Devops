@@ -1,0 +1,91 @@
+How to Install Docker on AWS E2 instane(Ubuntu 20.04)
+
+*Setup Docker Repository
+Update the repository cache.
+- sudo apt update
+
+*Install the below packages to ensure the apt work with https method, and CA certificates are installed.
+- sudo apt install -y apt-transport-https software-properties-common ca-certificates curl wget
+
+*Add the GPG key for Docker repository on your system.
+- wget https://download.docker.com/linux/ubuntu/gpg 
+- sudo apt-key add gpg
+
+*Now, add the official Docker repository by running the below command in the terminal.
+- echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" | sudo tee /etc/apt/sources.list.d/docker.list
+
+*Update the apt database.
+- sudo apt update
+
+*Make sure you are installing the docker package from the official repository.
+- sudo apt-cache policy docker-ce
+Output:
+docker-ce:
+  Installed: (none)
+  Candidate: 18.03.1~ce~3-0~ubuntu
+  Version table:
+     18.03.1~ce~3-0~ubuntu 500
+        500 https://download.docker.com/linux/ubuntu bionic/stable amd64 Packages
+
+*Install Docker CE on Ubuntu
+Now, install the Docker using the following command.
+- sudo apt install -y docker-ce
+
+*Now you have Docker installed on your machine, start the Docker service in case if it is not started automatically after the installation
+- sudo systemctl start docker
+- sudo systemctl enable docker
+
+*Verify the Docker version.
+- docker --version
+Output:
+Docker version 18.03.1-ce, build 9ee9f40
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+How to install jenkins on amazon EC2 (As a docker container) 
+Prerequisites:
+1. Any linux flavour EC2 instace.
+2. Docker agent must be instlled.
+
+Commands to install jenkins:
+
+docker pull jenkins/jenkins:latest
+docker images 
+
+docker run -itd -p 8080:8080 --name jenkins <imageID>
+docker ps 
+
+docker exec -it <containe_id> /bin/bash
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Creating pipeline in Jenkins
+
+1.Create a pipeline job in jenkins.
+2.Write a groovy pipeline with all cicd stages.(checkout code, build the project) generate a jar file.
+3.Create a Dockerfile for the generated jar/war file for the appication.(cmd- touch Dockerfile)
+4.Deploy the jar file as a docker image to docker hosted machine.
+
+# we will use openjdk
+8 with alpine as it is a very small linux distro
+
+FROM
+openjdk:8-jre-alpine3.9
+ 
+#copy the packaged jar file into our docker image
+
+COPY
+target/demo-0.0.1-SNAPSHOT.jar/demo.jar
+ 
+#set the startup
+command to execute the jar
+CMD["java","-jar","/demo.jar"]
+
+docker build -t <dockerfile_name>
+
+docker run -itd -p 9090:9090 --name firstApp <imageID>
+docker ps
+
+Now we can access the application using container IP address and exposed port number.

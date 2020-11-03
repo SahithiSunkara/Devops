@@ -1,0 +1,45 @@
+to install docker on all machines follow below commands:
+
+*Setup Docker Repository
+Update the repository cache.
+- sudo apt update
+
+*Install the below packages to ensure the apt work with https method, and CA certificates are installed.
+- sudo apt install -y apt-transport-https software-properties-common ca-certificates curl wget
+
+*Add the GPG key for Docker repository on your system.
+- wget https://download.docker.com/linux/ubuntu/gpg 
+- sudo apt-key add gpg
+
+*Now, add the official Docker repository by running the below command in the terminal.
+- echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" | sudo tee /etc/apt/sources.list.d/docker.list
+
+*Update the apt database.
+- sudo apt update
+
+*Make sure you are installing the docker package from the official repository.
+- sudo apt-cache policy docker-ce
+
+*Install Docker CE on Ubuntu
+Now, install the Docker using the following command.
+- sudo apt install -y docker-ce-5:18.09.5~3-0~ubuntu-bionic
+
+*Now you have Docker installed on your machine, start the Docker service in case if it is not started automatically after the installation
+- sudo systemctl start docker
+- sudo systemctl enable docker
+
+*Verify the Docker version.
+- docker --version
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+docker swarm init --advertise-addr <MANAGER-IP>
+To add a worker to this swarm, run the following command:
+docker swarm join \
+    --token SWMTKN-1-49nj1cmql0jkz5s954yi3oex3nedyz0fb0xx14ie39trti4wxv-8vxv8rssmk743ojnwacrr2e7c \
+    192.168.99.100:2377
+
+docker nodes
+
+edit /etc/sudoers file and add     
+UserName ALL=(ALL) ALL
+

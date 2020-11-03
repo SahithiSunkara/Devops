@@ -1,0 +1,7 @@
+docker service scale products-fruit=5
+ 
+docker service create --name products-vegetables linuxacademycontent/vegetable-service:1.0.0
+
+docker run -itd --name products-vegetables -p 80:80 <imageID>
+
+docker service scale products-vegetables=3

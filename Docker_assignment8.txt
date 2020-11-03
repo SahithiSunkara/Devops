@@ -1,0 +1,24 @@
+Create a Dockerfile: 
+touch Dockerfile_file1
+FROM busybox
+
+CMD[""sh" "-c" 'i=0; while true; do echo "$i: $(date)" >> /var/log/test/1.log; i=$((i+1)); sleep 1; done'"]
+
+VOLUME ["/data/test-data", "/var/log/test"]
+
+
+Docker_File for fluentd:
+touch Dockerfile_file2
+FROM k8s.gcr.io/fluentd-gcp:1.30
+
+ENV FLUENTD_ARGS= -c /fluentd/etc/fluent.conf 
+
+VOLUME ["/data/test-data", "/var/log/input"]
+
+VOLUME ["/etc/fluentd/fluent.conf", "/fluentd/etc/fluent.conf"]
+
+VOLUME ["/etc/fluentd/output", "/var/log/output"]
+
+docker build -t Dockerfile_file1
+
+docker build -t Dockerfile_file2 

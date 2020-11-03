@@ -1,0 +1,10 @@
+docker network create prices-net
+
+docker pull linuxacademycontent/prices-base-price:1
+docker run -itd --name prices --network prices-net container_ID 
+
+docker pull linuxacademycontent/prices-sales:1
+docker run -itd --name sales --network prices-net container_ID
+
+docker pull linuxacademycontent/prices-total-price:1
+docker run -itd --name total --network prices-net -p  80:8080 container_ID

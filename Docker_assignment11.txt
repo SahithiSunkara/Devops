@@ -1,0 +1,21 @@
+docker network create -d overlay my-overlay prices-overlay-net
+
+creating service:
+
+docker pull linuxacademycontent/prices-base-price:1
+
+docker service create --name base-price --replicas=3 linuxacademycontent/prices-base-price:1
+
+docker run -itd --name base-price --network prices-overlay-net image_ID
+
+docker pull linuxacademycontent/prices-sales:1
+
+docker service create --name sales --replicas=3 linuxacademycontent/prices-sales:1
+
+docker run -itd --name sales --network prices-overlay-net image_ID
+
+docker pull linuxacademycontent/prices-total-price:1
+
+docker service create --name total-price --replicas=2 linuxacademycontent/prices-total-price:1
+
+docker run -itd --name total-price --network prices-overlay-net -p 80:8080 image_ID 
